@@ -1,0 +1,182 @@
+extends layout
+block append head
+    script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js')
+    script(src='https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js')
+    script(src='/javascripts/calcs.js')
+    script(type='text/javascript').
+            $(document).ready(function() {
+                addEventHandlers();
+            });
+            
+block content
+  h1= title
+  div.container      
+      form( name="addsheet",method="post",action="/addsheet")
+        div.row 
+            div.col-xs-4
+                div.form-group
+                    label(for='openername') Opener's Name
+                    input.form-control(type="text", id="openername", name="openername")
+            div.col-xs-4                    
+                div.form-group 
+                    label(for='closername') Closer's Name
+                    input.form-control(type="text",  id="closername", name="closername")
+            div.col-xs-4                
+                div.form-group
+                    label(for='processdate') Date
+                    input.form-control(type='text', name='processdate', id='processdate') 
+                div.form-group
+                    input(type='radio', name='store', value='Squirrel Hill') 
+                    | Squirrel Hill 
+                    input(type='radio', name='store', value='South Hills Village') 
+                    | South Hills Village                    
+        div.row
+            div.col-xs-4#opening
+                h2|Step 1, Opening Totals
+                div.form-group
+                    label(for='open_1cent') .01
+                    input.form-control(type="text",id='open_1cent', value="0", name="open_1cent")
+                div.form-group            
+                    label(for='open_5cents') .05
+                    input.form-control(type="text", id='open_5cents', value="0", name="open_5cents")
+                div.form-group    
+                    label(for='open_10cents') .10
+                    input.form-control(type="text", id='open_10cents', value="0", name="open_10cents")
+                div.form-group    
+                    label(for='open_25cents') .25
+                    input.form-control(type="text", id='open_25cents',value="0",  name="open_25cents")
+                div.form-group        
+                    label(for='open_1dollar') $1
+                    input.form-control(type="text", id='open_1dollar', value="0", name="open_1dollar")     
+                div.form-group 
+                    label(for='open_5dollars') $5        
+                    input.form-control(type="text", id='open_5dollars',value="0", name="open_5dollars")
+                div.form-group   
+                    label(for='open_10dollars') $10     
+                    input.form-control(type="text", id='open_10dollars', value="0",  name="open_10dollars")
+                div.form-group  
+                    label(for='open_20dollars') $20      
+                    input.form-control(type="text",  id='open_20dollars',value="0", name="open_20dollars")   
+                div.form-group              
+                    label(for='open_50dollars') $50      
+                    input.form-control(type="text", id='open_50dollars', value="0", name="open_50dollars")
+                div.form-group              
+                    label(for='open_100dollars') $100     
+                    input.form-control(type="text",  id='open_100dollars',value="0",  name="open_100dollars")
+                div.form-group              
+                    label(for='open_total') Total      
+                    input.form-control(type="text", id='open_total',value="0", disabled="disabled" ,name="open_total")
+            div.col-xs-4#closing
+                h2|Step 2, Closing Totals
+                div.form-group
+                    label(for='close_1cent') .01
+                    input.form-control(type="text",id='close_1cent',value="0", name="close_1cent")
+                div.form-group            
+                    label(for='close_5cents') .05
+                    input.form-control(type="text", id='close_5cents',value="0", name="close_5cents")
+                div.form-group    
+                    label(for='close_10cents') .10
+                    input.form-control(type="text", id='close_10cents',value="0",  name="close_10cents")
+                div.form-group    
+                    label(for='close_25cents') .25
+                    input.form-control(type="text", id='close_25cents',value="0",   name="close_25cents")
+                div.form-group        
+                    label(for='close_1dollar') $1
+                    input.form-control(type="text", id='close_1dollar',value="0",  name="close_1dollar")     
+                div.form-group 
+                    label(for='close_5dollars') $5        
+                    input.form-control(type="text", id='close_5dollars',value="0", name="close_5dollars")
+                div.form-group   
+                    label(for='close_10dollars') $10     
+                    input.form-control(type="text", id='close_10dollars',value="0",   name="close_10dollars")
+                div.form-group  
+                    label(for='close_20dollars') $20      
+                    input.form-control(type="text",  id='close_20dollars',value="0",  name="close_20dollars")   
+                div.form-group              
+                    label(for='close_50dollars') $50      
+                    input.form-control(type="text", id='close_50dollars',value="0",   name="close_50dollars")
+                div.form-group              
+                    label(for='close_100dollars') $100     
+                    input.form-control(type="text",  id='close_100dollars',value="0",   name="close_100dollars")
+                div.form-group              
+                    label(for='close_total') Total      
+                    input.form-control(type="text", id='close_total', disabled="disabled",value="0",  name="close_total")
+            div.col-xs-4#sales
+                h2|Step 3, Sales
+                div.form-group 
+                    label(for='bisque_sales') Bisque Sales
+                    input.form-control(type="text", id='bisque_sales',value="0", name="bisque_sales")
+                div.form-group  
+                    label(for='paint_time') Paint Time
+                    input.form-control(type="text",  id='paint_time',value="0", name="paint_time")
+                div.form-group  
+                    label(for='child_party') Children's Party 
+                    input.form-control(type="text",  id='child_party',value="0",  name="child_party")
+                div.form-group
+                    label(for='adult_party') Adult Party         
+                    input.form-control(type="text",  id='adult_party',value="0", name="adult_party")
+                div.form-group 
+                    label(for='party_deposit') Party Deposit   
+                    input.form-control(type="text",  id='party_deposit',value="0",  name="party_deposit")    
+                div.form-group 
+                    label(for='gift_certificates_sold') Gift Certificates Sold 
+                    input.form-control(type="text",  id='gift_certificates_sold',value="0", name="gift_certificates_sold")
+                div.form-group
+                    label(for='credit_card_tips') Credit Card Tips       
+                    input.form-control(type="text",  id='credit_card_tips',value="0",  name="credit_card_tips")  
+                div.form-group 
+                    label(for='sub_total_sales') Sub total   
+                    input.form-control(type="text", disabled="disabled",value="0", id='sub_total_sales', name="sub_total_sales")
+                div.form-group 
+                    label(for='sales_tax') Sales Tax      
+                    input.form-control(type="text",  id='sales_tax',value="0", name="sales_tax")  
+                div.form-group.totala 
+                    label(for='gross_sales') Gross Sales (Total A)
+                    input.form-control(type="text", disabled="disabled",value="0", id='gross_sales', name="gross_sales")   
+        div.row
+            div.col-xs-4#diff
+                div.form-group.totala 
+                    label(for='gross_sales_2') Gross Sales:(total A):
+                    input.form-control(type="text", disabled="disabled",value="0", id='totala', name="totala")
+                div.form-group.totalb 
+                    label(for='income_total') Total Income:(total B):
+                    input.form-control(type="text",disabled="disabled",value="0",  id='totalb', name="totalb")
+                div.form-group 
+                    label(for='difference') Difference (total a - total b)  Should be 0 (zero)!
+                    input.form-control(type="text" ,disabled="disabled",value="0", id='difference', name="difference")
+                div.form-group  
+                    label(for='income_cash_tips') Cash Tips
+                    input.form-control(type="text",id='income_cash_tips',value="0", name="income_cash_tips")
+                button#btn.btn-default(type="submit") Submit Daysheet
+            div.col-xs-4                    
+            div.col-xs-4#income
+                h2|Step 4, Income
+                div.form-group   
+                    label(for='income_cash_store') Cash (total closing cash from drawer with $100 subtracted)
+                    input.form-control(type="text",  disabled="disabled",value="0", id='income_cash_store', name="income_cash_store")    
+                div.form-group 
+                    label(for='income_debits') Debits
+                    input.form-control(type="text", id='income_debits',value="0", name="income_debits")
+                div.form-group 
+                    label(for='income_checks') Checks
+                    input.form-control(type="text", id='income_checks',value="0", name="income_checks")
+                div.form-group 
+                    label(for='income_credit_card') Credit Card
+                    input.form-control(type="text", id='income_credit_card',value="0", name="income_credit_card")
+                div.form-group 
+                    label(for='income_coupon') Coupon
+                    input.form-control(type="text",id='income_coupon',value="0", name="income_coupon")  
+                div.form-group 
+                    label(for='income_receipts') Receipts
+                    input.form-control(type="text", id='income_receipts',value="0", name="income_receipts")
+                div.form-group 
+                    label(for='income_gift_certificate_redeemed') Gift Certificate Redeemed
+                    input.form-control(type="text",id='income_gift_certificate_redeemed',value="0" ,  name="income_gift_certificate_redeemed")
+                div.form-group 
+                    label(for='income_deposit_redeemed') Deposit Redeemed
+                    input.form-control(type="text",  id='income_deposit_redeemed',value="0" , name="income_deposit_redeemed") 
+                div.form-group.totalb 
+                    label(for='income_total') Total (Total B)
+                    input.form-control(type="text",  disabled="disabled",value="0" , id='income_total', name="income_total")        
+       
+        
