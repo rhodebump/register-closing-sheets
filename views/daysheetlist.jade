@@ -1,0 +1,46 @@
+extends layout
+block append head
+    script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js')
+    script(src='https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js')
+    script(src='/javascripts/search.js')
+    script(type='text/javascript').
+            $(document).ready(function() {
+                addEventHandlers();
+            });
+            
+block content
+    h1.
+        Daysheet List
+    div.container
+        form#searchform
+            div.row 
+                div.col-xs-4
+                    div.form-group
+                        label(for='startdate') Start 
+                        input.form-control(type='text', name='startdate', id='startdate') 
+                div.col-xs-4                    
+                    div.form-group 
+                        label(for='enddate') End 
+                        input.form-control(type='text', name='enddate', id='enddate') 
+                div.col-xs-4                
+                    div.form-group
+                        input(type='radio', name='store', value='Squirrel Hill') 
+                        | Squirrel Hill 
+                        input(type='radio', name='store', value='South Hills Village') 
+                        | South Hills Village  
+            button#searchbutton.btn-default( type="submit") Search Daysheets
+    div#daysheetlist        
+        table.table
+            thead
+                tr
+                    th.
+                        Details
+                    th.
+                        Process Date
+                    th.
+                        Tips
+                    th.
+                        Store
+            tbody
+    div#totaltips
+               

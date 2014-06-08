@@ -1,0 +1,41 @@
+@media print {
+    .form-control {
+        color: black;
+        border-width: 0;
+        border: 1px solid #000;
+        display:inline;
+        width:60px;
+    }
+    label {
+        margin-bottom: 0px;
+        floatx:left;
+    }
+    h2 {
+        font-size: 12pt;
+    }
+    .form-group {
+        margin-bottom: 0px;
+    }
+    #processdate {
+          width:80px;
+    }
+    input[type="text"] {
+          height: 18px;
+        color: black;
+        border-width: 0;
+        padding:0px;
+        borderx: 1px solid #000;
+    }
+    input[type="submit"],
+    select {
+        display: none;
+    }
+    button {
+        display: none;
+    }
+    body {
+        background: white;
+        font-size: 12pt;
+        /* Change text colour to black (useful for light text on a dark background) */
+    }
+}
