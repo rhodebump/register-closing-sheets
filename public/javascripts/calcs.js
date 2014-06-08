@@ -20,35 +20,38 @@
 
 
  function addEventHandlers() {
-     // $('#processdate').datepicker();
-     $("#processdate").datepicker({
-         dateFormat: "yy-mm-dd"
-     });
-     // $( "#enddate" ).datepicker({ dateFormat: "yy-mm-dd" });
-     $("#opening input").change(function () {
-         calculateAll();
+     
+     var id = getParameterByName("id");
 
-     });
+     if (id == null || id == '') {
 
-     $("#closing input").change(function () {
-         calculateAll();
+         $("#processdate").datepicker({
+             dateFormat: "yy-mm-dd"
+         });
+         $("#opening input").change(function () {
+             calculateAll();
 
-     });
+         });
 
-     $("#sales input").change(function () {
-         calculateAll();
-     });
+         $("#closing input").change(function () {
+             calculateAll();
 
-     $("#income input").change(function () {
-         calculateAll();
+         });
 
-     });
+         $("#sales input").change(function () {
+             calculateAll();
+         });
 
-     $("#diff input").change(function () {
-         calculateAll();
-     });
+         $("#income input").change(function () {
+             calculateAll();
 
+         });
 
+         $("#diff input").change(function () {
+             calculateAll();
+         });
+
+     }
 
      populateDataIfId();
 
