@@ -3,3 +3,15 @@ extends layout
 block content
   h1= title
   p Welcome to #{title}
+  p This application is for closing out the register.  If you have any problems, or comments, please email rhodebump@gmail.com 
+  if (!auth.isAuthenticated)
+    a(href="/login") Login
+  if (auth.isAuthenticated)
+    p
+        a(href="daysheetlist")      Daysheet List  
+        This is used to view past daysheets that have been submitted
+    p    
+        a(href="newsheet") New Daysheet  
+        Use this to submit a new daysheets.
+    p You are currently logged in
+    a(href="/logout") Logout        

@@ -3,38 +3,32 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/', function (req, res) {
+
+    // res.render('index.jade', { username: req.user.username });
+
     res.render('index', {
-        title: 'Express'
+        title: 'Color Me Mine'
     });
 });
-/* GET Hello World page. */
-router.get('/helloworld', function (req, res) {
-    res.render('helloworld', {
-        title: 'Hello, World!'
-    })
-});
 
-/* GET Hello World page. */
-router.get('/newsheet', function (req, res) {
+router.get('/newsheet', isLoggedIn, function (req, res) {
     res.render('newsheet', {
         title: 'New Daysheet'
     })
 });
 
 
-/* GET Userlist page. */
-router.get('/daysheetlist', function (req, res) {
-    var db = req.db;
-    var collection = db.get('daysheetcollection');
-    collection.find({}, {}, function (e, docs) {
-        res.render('daysheetlist', {
-            "daysheetlist": docs
-        });
-    });
+router.get('/daysheetlist', isLoggedIn, function (req, res) {
+
+
+    res.render('daysheetlist', {
+        title: 'Daysheets'
+    })
+
 });
 
 
-router.post('/addsheet', function (req, res) {
+router.post('/addsheet', isLoggedIn,function (req, res) {
 
     // Set our internal DB variable
     var db = req.db;
@@ -62,7 +56,7 @@ router.post('/addsheet', function (req, res) {
         "open_20dollars": req.body.open_20dollars,
         "open_50dollars": req.body.open_50dollars,
         "open_100dollars": req.body.open_100dollars,
-        
+
         "open_total": req.body.open_total,
         "close_1cent": req.body.close_1cent,
         "close_5cents": req.body.close_5cents,
@@ -75,7 +69,7 @@ router.post('/addsheet', function (req, res) {
         "close_50dollars": req.body.close_50dollars,
         "close_100dollars": req.body.close_100dollars,
         "close_total": req.body.close_total,
-        
+
         "income_cash_store": req.body.income_cash_store,
         "income_debits": req.body.income_debits,
         "income_checks": req.body.income_checks,
@@ -93,7 +87,7 @@ router.post('/addsheet', function (req, res) {
         "totalb": req.body.totalb,
         "difference": req.body.difference,
         "income_cash_tips": req.body.income_cash_tips,
-        
+
         "bisque_sales": req.body.bisque_sales,
         "paint_time": req.body.paint_time,
         "child_party": req.body.child_party,
@@ -157,5 +151,74 @@ router.post('/addsheet', function (req, res) {
 });
 
 
+
+router.get('/api/daysheet/search', isLoggedIn,function (req, res) {
+
+    var db = req.db;
+    var startdate = req.param('startdate');
+    var enddate = req.param('enddate');
+
+    var store = req.param('store');
+    console.log('store', req.params);
+    var query = {};
+    if (store) {
+        query["store"] = store;
+    }
+
+    if (startdate && enddate) {
+
+        query["processdate"] = {
+            "$gte": startdate,
+            "$lt": enddate
+        };
+
+    } else if (startdate) {
+        query["processdate"] = {
+            "$gte": startdate
+        };
+
+    } else if (enddate) {
+        query["processdate"] = {
+            "$lt": enddate
+        };
+
+    }
+    console.log("query=", query);
+
+    var collection = db.get('daysheetcollection');
+    collection.find(query, {}, function (e, docs) {
+        res.json(docs);
+    });
+
+
+
+})
+
+
+router.get('/api/daysheet/:id',isLoggedIn, function (req, res) {
+
+    var db = req.db;
+    var id = req.params.id;
+    var collection = db.get('daysheetcollection');
+    collection.findOne({
+        _id: id
+    }, function (err, doc) {
+        res.json(doc);
+    });
+
+})
+
+
+
+// route middleware to make sure a user is logged in
+function isLoggedIn(req, res, next) {
+    console.log("isLoggedin");
+    // if user is authenticated in the session, carry on
+    if (req.isAuthenticated()) {
+        console.log("request is authenticated");
+        return next();
+    }
+    res.redirect('/auth/google');
+}
 
 module.exports = router;

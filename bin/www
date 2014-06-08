@@ -3,7 +3,7 @@ var debug = require('debug')('daysheet');
 var app = require('../app');
 
 //app.set('port', process.env.PORT || 3000);
-app.set('ipaddr', process.env.OPENSHIFT_NODEJS_IP || "127.0.0.1")
+app.set('ipaddr', process.env.OPENSHIFT_NODEJS_IP || "192.168.1.146")
 app.set('port', process.env.OPENSHIFT_NODEJS_PORT || 3000);
 
 var server = app.listen(app.get('port'),app.get('ipaddr'), function() {

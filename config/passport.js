@@ -18,21 +18,16 @@ module.exports = function (passport) {
     //   have a database of user records, the complete Google profile is serialized
     //   and deserialized.
     passport.serializeUser(function (user, done) {
+        console.log('serializeUser');
         done(null, user);
     });
 
     passport.deserializeUser(function (obj, done) {
+        console.log('deserializeUser');
         done(null, obj);
     });
 
-    // code for login (use('local-login', new LocalStategy))
-    // code for signup (use('local-signup', new LocalStategy))
-    // code for facebook (use('facebook', new FacebookStrategy))
-    // code for twitter (use('twitter', new TwitterStrategy))
 
-    // =========================================================================
-    // GOOGLE ==================================================================
-    // =========================================================================
     passport.use(new GoogleStrategy({
 
             clientID: configAuth.googleAuth.clientID,
@@ -44,7 +39,8 @@ module.exports = function (passport) {
 
             // make the code asynchronous
             process.nextTick(function () {
-
+                console.log('nextTick');
+                //profile.identifier = identifier;
                 return done(null, profile);
 
             });
