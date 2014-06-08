@@ -11,7 +11,7 @@ block append head
 block content
   h1= title
   div.container      
-      form( name="addsheet",method="post",action="/addsheet")
+      form#sheetform( name="addsheet",method="post",action="/addsheet")
         div.row 
             div.col-xs-4
                 div.form-group

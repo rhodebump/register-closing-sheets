@@ -20,7 +20,7 @@
 
 
  function addEventHandlers() {
-     
+
      var id = getParameterByName("id");
 
      if (id == null || id == '') {
@@ -50,6 +50,13 @@
          $("#diff input").change(function () {
              calculateAll();
          });
+
+
+
+         $("#sheetform").submit(function (event) {
+             enableControls();
+         });
+
 
      }
 
@@ -89,6 +96,8 @@
          $('#open_20dollars').val(data.open_20dollars);
          $('#open_50dollars').val(data.open_50dollars);
          $('#open_100dollars').val(data.open_100dollars);
+         $('#open_total').val(data.open_total);
+
 
 
          $('#close_1cent').val(data.close_1cent);
@@ -101,7 +110,7 @@
          $('#close_20dollars').val(data.close_20dollars);
          $('#close_50dollars').val(data.close_50dollars);
          $('#close_100dollars').val(data.close_100dollars);
-
+         $('#close_total').val(data.close_total);
 
          $('#bisque_sales').val(data.bisque_sales);
          $('#paint_time').val(data.paint_time);
@@ -148,8 +157,10 @@
      calculateOpenTotals();
      calculateClosingTotals();
      calculateIncomeTotals();
-     calculateDiffTotal();
      calculateSalesTotals();
+
+     calculateDiffTotal();
+
 
  }
 
@@ -162,7 +173,29 @@
      $('#difference').val(total);
  }
 
+ /*
+disabled elements do not get submitted
+*/
+ function enableControls() {
 
+     $("#open_total").prop("disabled", false);
+     $("#close_total").prop("disabled", false);
+
+     $("#income_total").prop("disabled", false);
+     $("#totalb").prop("disabled", false);
+
+
+     $("#difference").prop("disabled", false);
+
+
+     $("#income_cash_store").prop("disabled", false);
+     $("#sub_total_sales").prop("disabled", false);
+     $("#gross_sales").prop("disabled", false);
+     $("#totala").prop("disabled", false);
+
+
+
+ }
 
  function calculateSalesTotals() {
 

@@ -20,10 +20,14 @@ var mongoUser = process.env.MONGO_USER || '';
 var mongoPass = process.env.MONGO_PASSWORD || '';
 var mongoDb = process.env.MONGO_DB || '';
 
+var mongoString = '';
+var app = express();
+if (process.env.OPENSHIFT_MONGODB_DB_HOST) {
+    mongoString = 'mongodb://' + mongoUser + ':' + mongoPass + '@' + mongoHost + ':' + mongoPort + '/' + mongoDb;
 
-var mongoString = 'mongodb://' + mongoUser + ':' + mongoPass + '@' + mongoHost + ':' + mongoPort + '/' + mongoDb;
-//use this for local dev
-//var mongoString = 'mongodb://' + mongoHost + ':' + mongoPort + '/' + mongoDb;
+} else {
+    mongoString = 'mongodb://' + mongoHost + ':' + mongoPort + '/' + mongoDb;
+}
 
 //connect to mongo
 var db = monk(mongoString, function (err) {
@@ -44,7 +48,7 @@ var smtpTransport = nodemailer.createTransport("SMTP", {
 
 var routes = require('./routes/index');
 
-var app = express();
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

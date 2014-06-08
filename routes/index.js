@@ -1,11 +1,7 @@
 var express = require('express');
 var router = express.Router();
 
-/* GET home page. */
 router.get('/', function (req, res) {
-
-    // res.render('index.jade', { username: req.user.username });
-
     res.render('index', {
         title: 'Color Me Mine'
     });
@@ -28,7 +24,7 @@ router.get('/daysheetlist', isLoggedIn, function (req, res) {
 });
 
 
-router.post('/addsheet', isLoggedIn,function (req, res) {
+router.post('/addsheet', isLoggedIn, function (req, res) {
 
     // Set our internal DB variable
     var db = req.db;
@@ -56,8 +52,8 @@ router.post('/addsheet', isLoggedIn,function (req, res) {
         "open_20dollars": req.body.open_20dollars,
         "open_50dollars": req.body.open_50dollars,
         "open_100dollars": req.body.open_100dollars,
-
         "open_total": req.body.open_total,
+
         "close_1cent": req.body.close_1cent,
         "close_5cents": req.body.close_5cents,
         "close_10cents": req.body.close_10cents,
@@ -98,11 +94,6 @@ router.post('/addsheet', isLoggedIn,function (req, res) {
         "sub_total_sales": req.body.sub_total_sales,
         "sales_tax": req.body.sales_tax,
         "gross_sales": req.body.gross_sales
-
-
-
-
-
 
     };
     // Submit to the DB
@@ -152,7 +143,7 @@ router.post('/addsheet', isLoggedIn,function (req, res) {
 
 
 
-router.get('/api/daysheet/search', isLoggedIn,function (req, res) {
+router.get('/api/daysheet/search', isLoggedIn, function (req, res) {
 
     var db = req.db;
     var startdate = req.param('startdate');
@@ -195,7 +186,7 @@ router.get('/api/daysheet/search', isLoggedIn,function (req, res) {
 })
 
 
-router.get('/api/daysheet/:id',isLoggedIn, function (req, res) {
+router.get('/api/daysheet/:id', isLoggedIn, function (req, res) {
 
     var db = req.db;
     var id = req.params.id;
@@ -212,7 +203,7 @@ router.get('/api/daysheet/:id',isLoggedIn, function (req, res) {
 
 // route middleware to make sure a user is logged in
 function isLoggedIn(req, res, next) {
-    console.log("isLoggedin");
+
     // if user is authenticated in the session, carry on
     if (req.isAuthenticated()) {
         console.log("request is authenticated");
