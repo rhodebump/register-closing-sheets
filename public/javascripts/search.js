@@ -12,7 +12,7 @@ function populateTable(data) {
     var totaltips = 0;
     $.each(data, function () {
         tableContent += '<tr>';
-        tableContent += '<td><a href="newsheet?id=' + this._id + '" title="Show Details">Show Details</a></td>';
+        tableContent += '<td><a href="daysheet?id=' + this._id + '" title="Show Details">Show Details</a></td>';
         tableContent += '<td>' + this.processdate + '</td>';
         var tips = parseFloat(this.income_cash_tips) + parseFloat(this.income_cash_tips);
         tableContent += '<td>' + tips + '</td>';

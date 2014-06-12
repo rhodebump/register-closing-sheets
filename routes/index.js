@@ -7,9 +7,9 @@ router.get('/', function (req, res) {
     });
 });
 
-router.get('/newsheet', isLoggedIn, function (req, res) {
+router.get('/daysheet', isLoggedIn, function (req, res) {
     res.render('newsheet', {
-        title: 'New Daysheet'
+        title: 'Daysheet'
     })
 });
 
@@ -24,20 +24,18 @@ router.get('/daysheetlist', isLoggedIn, function (req, res) {
 });
 
 
-router.post('/addsheet', isLoggedIn, function (req, res) {
+router.post('/savesheet', isLoggedIn, function (req, res) {
 
     // Set our internal DB variable
     var db = req.db;
 
     // Get our form values. These rely on the "name" attributes
-    var openername = req.body.openername;
-    var closername = req.body.closername;
-    var daysheetdate = req.body.daysheetdate;
+    //var daysheetdate = req.body.daysheetdate;
     // Set our collection
     var collection = db.get('daysheetcollection');
 
-
     var daysheet = {
+        "submit_daysheet": req.body.submit_daysheet,
         "store": req.body.store,
         "openername": req.body.openername,
         "closername": req.body.closername,
@@ -75,10 +73,6 @@ router.post('/addsheet', isLoggedIn, function (req, res) {
         "income_gift_certificate_redeemed": req.body.income_gift_certificate_redeemed,
         "income_deposit_redeemed": req.body.income_deposit_redeemed,
         "income_total": req.body.income_total,
-
-
-
-
         "totala": req.body.totala,
         "totalb": req.body.totalb,
         "difference": req.body.difference,
@@ -97,17 +91,66 @@ router.post('/addsheet', isLoggedIn, function (req, res) {
 
     };
     // Submit to the DB
-    collection.insert(daysheet, function (err, doc) {
-        if (err) {
-            // If it failed, return error
-            res.send("There was a problem adding the information to the database.");
-        } else {
-            // If it worked, set the header so the address bar doesn't still say /adduser
-            res.location("daysheetlist");
-            // And forward to success page
-            res.redirect("daysheetlist");
-        }
-    });
+    console.log(daysheet);
+        console.log(req.body._id);
+    
+    if (req.body._id) {
+        console.log("doing update");
+
+
+        collection.findOne({
+            _id: req.body._id
+        }, function (err, doc) {
+            console.log("found one");
+                        console.log(doc.submit_daysheet);
+            
+            if (doc.submit_daysheet) {
+                console.log("cannot save daysheet");
+                res.send("Can not save daysheet that was previously submitted");
+                return;
+            }
+            
+            
+        });
+
+
+
+        collection.updateById(req.body._id, daysheet, function (err, doc) {
+            if (err) {
+                // If it failed, return error
+                res.send("There was a problem adding the information to the database.");
+            } else {
+                // If it worked, set the header so the address bar doesn't still say /adduser
+                //res.location("daysheetlist");
+                // And forward to success page
+                res.redirect("daysheetlist");
+                console.log("update");
+                console.log(doc);
+
+                res.redirect("daysheet?id=" + req.body._id);
+
+            }
+        });
+
+
+    } else {
+        console.log("doing insert");
+        collection.insert(daysheet, function (err, doc) {
+            if (err) {
+                // If it failed, return error
+                res.send("There was a problem adding the information to the database.");
+            } else {
+                // If it worked, set the header so the address bar doesn't still say /adduser
+                //res.location("daysheetlist");
+                // And forward to success page
+                // res.redirect("daysheetlist");
+
+                res.redirect("daysheet?id=" + doc._id);
+
+            }
+        });
+    }
+
 
 
 
@@ -204,6 +247,9 @@ router.get('/api/daysheet/:id', isLoggedIn, function (req, res) {
 // route middleware to make sure a user is logged in
 function isLoggedIn(req, res, next) {
 
+    if (true) {
+        return next();
+    }
     // if user is authenticated in the session, carry on
     if (req.isAuthenticated()) {
         console.log("request is authenticated");

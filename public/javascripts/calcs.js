@@ -21,44 +21,38 @@
 
  function addEventHandlers() {
 
-     var id = getParameterByName("id");
-
-     if (id == null || id == '') {
-
-         $("#processdate").datepicker({
-             dateFormat: "yy-mm-dd"
-         });
-         $("#opening input").change(function () {
-             calculateAll();
-
-         });
-
-         $("#closing input").change(function () {
-             calculateAll();
-
-         });
-
-         $("#sales input").change(function () {
-             calculateAll();
-         });
-
-         $("#income input").change(function () {
-             calculateAll();
-
-         });
-
-         $("#diff input").change(function () {
-             calculateAll();
-         });
 
 
+     $("#processdate").datepicker({
+         dateFormat: "yy-mm-dd"
+     });
+     $("#opening input").change(function () {
+         calculateAll();
 
-         $("#sheetform").submit(function (event) {
-             enableControls();
-         });
+     });
+
+     $("#closing input").change(function () {
+         calculateAll();
+
+     });
+
+     $("#sales input").change(function () {
+         calculateAll();
+     });
+
+     $("#income input").change(function () {
+         calculateAll();
+     });
+
+     $("#diff input").change(function () {
+         calculateAll();
+     });
+     $("#sheetform").submit(function (event) {
+         enableControls();
+     });
 
 
-     }
+
 
      populateDataIfId();
 
@@ -83,9 +77,9 @@
      $.getJSON('/api/daysheet/' + id, function (data) {
 
          // For each item in our JSON, add a table row and cells to the content string
-         // $.each(data, function () {
 
 
+         $('#_id').val(data._id);
          $('#open_1cent').val(data.open_1cent);
          $('#open_5cents').val(data.open_5cents);
          $('#open_10cents').val(data.open_10cents);
@@ -147,6 +141,8 @@
          $('#totalb').val(data.totalb);
          $('#difference').val(data.difference);
          $('#income_cash_tips').val(data.income_cash_tips);
+         $('#notes').val(data.notes);
+
 
 
      });
@@ -158,7 +154,6 @@
      calculateClosingTotals();
      calculateIncomeTotals();
      calculateSalesTotals();
-
      calculateDiffTotal();
 
 
