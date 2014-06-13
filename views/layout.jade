@@ -13,6 +13,15 @@ html
     script(src='/bootstrap/js/bootstrap.min.js')
     block head
   body
-    p
+    .container
+        if messages.error
+            .alert.alert-danger
+                div= messages.error
+        if messages.info
+            .alert.alert-info
+                div= messages.info
+        if messages.success
+            .alert.alert-success
+                div= messages.success
         a(href="/")     Home Page
-    block content
+        block content

@@ -24,10 +24,11 @@ block content
                         input.form-control(type='text', name='enddate', id='enddate') 
                 div.col-xs-4                
                     div.form-group
-                        input(type='radio', name='store', value='Squirrel Hill') 
-                        | Squirrel Hill 
-                        input(type='radio', name='store', value='South Hills Village') 
-                        | South Hills Village  
+                        label(for='store') Store 
+                        select.form-control#store(name='store')
+                            option(value='')
+                            option(value='Squirrel Hill') Squirrel Hill
+                            option(value='South Hills Village') South Hills Village
             button#searchbutton.btn-default( type="submit") Search Daysheets
     div#daysheetlist        
         table.table

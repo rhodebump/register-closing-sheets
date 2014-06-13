@@ -8,7 +8,9 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var session = require('express-session')
+
 var passport = require('passport');
+var flash = require('express-flash');
 
 // New Code
 var mongo = require('mongodb');
@@ -65,7 +67,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({
     secret: 'keyboard cat'
 }))
-
+app.use(flash());
 
 app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions

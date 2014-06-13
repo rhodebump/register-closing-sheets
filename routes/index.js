@@ -92,8 +92,8 @@ router.post('/savesheet', isLoggedIn, function (req, res) {
     };
     // Submit to the DB
     console.log(daysheet);
-        console.log(req.body._id);
-    
+    console.log(req.body._id);
+
     if (req.body._id) {
         console.log("doing update");
 
@@ -102,37 +102,20 @@ router.post('/savesheet', isLoggedIn, function (req, res) {
             _id: req.body._id
         }, function (err, doc) {
             console.log("found one");
-                        console.log(doc.submit_daysheet);
-            
-            if (doc.submit_daysheet) {
+            console.log("submit_daysheet=" + doc.submit_daysheet);
+            if (doc.submit_daysheet != null) {
                 console.log("cannot save daysheet");
-                res.send("Can not save daysheet that was previously submitted");
-                return;
-            }
-            
-            
-        });
-
-
-
-        collection.updateById(req.body._id, daysheet, function (err, doc) {
-            if (err) {
-                // If it failed, return error
-                res.send("There was a problem adding the information to the database.");
+                //res.send("Can not save daysheet that was previously submitted");
+                req.flash('error', 'Can not save daysheet that was previously submitted');
+                res.location("daysheet");
+                res.redirect("daysheet?id=" + doc._id);
+                
             } else {
-                // If it worked, set the header so the address bar doesn't still say /adduser
-                //res.location("daysheetlist");
-                // And forward to success page
-                res.redirect("daysheetlist");
-                console.log("update");
-                console.log(doc);
-
-                res.redirect("daysheet?id=" + req.body._id);
-
+                updateDB(collection, req, res, daysheet);
+                sendEmail(req, daysheet);
+                daysheetDest(req, res, daysheet);
             }
         });
-
-
     } else {
         console.log("doing insert");
         collection.insert(daysheet, function (err, doc) {
@@ -141,46 +124,12 @@ router.post('/savesheet', isLoggedIn, function (req, res) {
                 res.send("There was a problem adding the information to the database.");
             } else {
                 // If it worked, set the header so the address bar doesn't still say /adduser
-                //res.location("daysheetlist");
-                // And forward to success page
-                // res.redirect("daysheetlist");
 
-                res.redirect("daysheet?id=" + doc._id);
-
+                sendEmail(req, daysheet);
+                daysheetDest(req, res, daysheet);
             }
         });
     }
-
-
-
-
-
-    // setup e-mail data with unicode symbols
-    var mailOptions = {
-        from: "Phillip Rhodes <rhodebumplist@gmail.com.com>", // sender address
-        to: "rhodebump@gmail.com", // list of receivers
-        subject: "Daysheet Submit", // Subject line
-        text: "text ",
-        html: JSON.stringify(daysheet)
-
-    }
-
-    var smtpTransport = req.smtpTransport;
-
-    // send mail with defined transport object
-    smtpTransport.sendMail(mailOptions, function (error, response) {
-        if (error) {
-            console.log(error);
-        } else {
-            console.log("Message sent: " + response.message);
-        }
-
-        // if you don't want to use this transport object anymore, uncomment following line
-        //smtpTransport.close(); // shut down the connection pool, no more messages
-    });
-
-
-
 
 });
 
@@ -243,6 +192,21 @@ router.get('/api/daysheet/:id', isLoggedIn, function (req, res) {
 })
 
 
+function updateDB(collection, req, res, daysheet) {
+
+    console.log("running  collection.updateById");
+
+    collection.updateById(req.body._id, daysheet, function (err, doc) {
+        if (err) {
+            // If it failed, return error
+            res.send("There was a problem adding the information to the database.");
+        } else {
+
+
+        }
+    });
+}
+
 
 // route middleware to make sure a user is logged in
 function isLoggedIn(req, res, next) {
@@ -256,6 +220,59 @@ function isLoggedIn(req, res, next) {
         return next();
     }
     res.redirect('/auth/google');
+}
+
+
+
+function daysheetDest(req, res, daysheet) {
+
+    if (daysheet.submit_daysheet != null) {
+        req.flash('info', 'Daysheet Submitted');
+        // req.flash('info', 'Flash Message Added');
+        res.location("daysheetlist");
+        res.redirect("daysheetlist");
+
+    } else {
+        req.flash('info', 'Daysheet Saved');
+        res.location("daysheet");
+        res.redirect("daysheet?id=" + daysheet._id);
+    }
+
+
+
+}
+
+function sendEmail(req, daysheet) {
+    //only email submits
+    if (daysheet.submit_daysheet == null) {
+        return;
+    }
+
+
+    // setup e-mail data with unicode symbols
+    var mailOptions = {
+        from: "Phillip Rhodes <rhodebumplist@gmail.com.com>", // sender address
+        to: "rhodebump@gmail.com", // list of receivers
+        subject: "Daysheet Submit", // Subject line
+        text: "text ",
+        html: JSON.stringify(daysheet)
+
+    }
+
+    var smtpTransport = req.smtpTransport;
+
+    // send mail with defined transport object
+    smtpTransport.sendMail(mailOptions, function (error, response) {
+        if (error) {
+            console.log(error);
+        } else {
+            console.log("Message sent: " + response.message);
+        }
+
+        // if you don't want to use this transport object anymore, uncomment following line
+        //smtpTransport.close(); // shut down the connection pool, no more messages
+    });
+
 }
 
 module.exports = router;
