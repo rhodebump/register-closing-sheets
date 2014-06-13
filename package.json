@@ -5,7 +5,7 @@
   "scripts": {
     "start": "node ./bin/www"
   },
-  "main":"./bin/www",
+  "main": "./bin/www",
   "dependencies": {
     "express": "~4.2.0",
     "static-favicon": "~1.0.0",
@@ -17,6 +17,7 @@
     "mongodb": "*",
     "monk": "*",
     "nodemailer": "~0.6.5",
-    "express-session": "*"
+    "express-session": "*",
+    "express-flash": "0.0.2"
   }
 }
