@@ -80,8 +80,8 @@ require('./config/passport.js')(passport); // pass passport for configuration
 var auth = function (req, res) {
 
     var map = {};
-    //map.isAuthenticated = req.isAuthenticated();
-    map.isAuthenticated = true;
+    map.isAuthenticated = req.isAuthenticated();
+    //map.isAuthenticated = true;
     map.user = req.user;
 
     return map;

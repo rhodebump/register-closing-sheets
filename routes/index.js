@@ -208,15 +208,15 @@ function updateDB(collection, req, res, daysheet) {
 }
 
 
+
 // route middleware to make sure a user is logged in
 function isLoggedIn(req, res, next) {
 
-    if (true) {
-        return next();
-    }
+    //if (true) {
+    //    return next();
+   // }
     // if user is authenticated in the session, carry on
     if (req.isAuthenticated()) {
-        console.log("request is authenticated");
         return next();
     }
     res.redirect('/auth/google');
