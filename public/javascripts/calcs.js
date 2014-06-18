@@ -79,7 +79,9 @@
          // For each item in our JSON, add a table row and cells to the content string
 
 
-         $('#_id').val(data._id);
+
+
+         $('#sheetform #_id').val(data._id);
          $('#open_1cent').val(data.open_1cent);
          $('#open_5cents').val(data.open_5cents);
          $('#open_10cents').val(data.open_10cents);
@@ -144,6 +146,14 @@
          $('#notes').val(data.notes);
 
 
+         $('#sheetform #_id').val(data._id);
+         $('#togglehiddenform #_id').val(data._id);
+
+         if (data.hidden == 'true') {
+             $('#hidden').text('Show Daysheet in search results');
+         } else {
+             $('#hidden').text('Hide Daysheet from search results');
+         }
 
      });
 

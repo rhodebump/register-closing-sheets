@@ -1,7 +1,7 @@
 var express = require('express');
 
 
-
+var configAuth = require('./config/auth.js');
 var path = require('path');
 var favicon = require('static-favicon');
 var logger = require('morgan');
@@ -80,9 +80,15 @@ require('./config/passport.js')(passport); // pass passport for configuration
 var auth = function (req, res) {
 
     var map = {};
-    map.isAuthenticated = req.isAuthenticated();
-    //map.isAuthenticated = true;
-    map.user = req.user;
+   
+    console.log("configAuth.development=" + configAuth.development);
+    if (configAuth.development) {
+        map.isAuthenticated = true;
+    } else {
+        map.user = req.user;
+         map.isAuthenticated = req.isAuthenticated();
+    }
+
 
     return map;
 }
@@ -90,6 +96,7 @@ var auth = function (req, res) {
 // Make our db accessible to our router
 app.use(function (req, res, next) {
     req.db = db;
+    req.configAuth = configAuth;
     req.smtpTransport = smtpTransport;
     res.locals.auth = auth(req, res);
     next();

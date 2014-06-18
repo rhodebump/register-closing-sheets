@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var configAuth = require('../config/auth.js');
 
 router.get('/', function (req, res) {
     res.render('index', {
@@ -15,8 +16,6 @@ router.get('/daysheet', isLoggedIn, function (req, res) {
 
 
 router.get('/daysheetlist', isLoggedIn, function (req, res) {
-
-
     res.render('daysheetlist', {
         title: 'Daysheets'
     })
@@ -24,6 +23,42 @@ router.get('/daysheetlist', isLoggedIn, function (req, res) {
 });
 
 
+
+router.post('/togglehidden', isLoggedIn, function (req, res) {
+    // Set our internal DB variable
+    var db = req.db;
+
+    // Get our form values. These rely on the "name" attributes
+    //var daysheetdate = req.body.daysheetdate;
+    // Set our collection
+    var collection = db.get('daysheetcollection');
+
+    collection.findOne({
+        _id: req.body._id
+    }, function (err, doc) {
+        console.log("found one");
+
+        if (doc.hidden != null) {
+            if (doc.hidden == 'true') {
+                doc.hidden = 'false';
+            } else {
+                doc.hidden = 'true';
+            }
+
+        } else {
+            doc.hidden = "true";
+        }
+
+        updateDB(collection, req, res, doc);
+
+        daysheetDest(req, res, doc);
+
+    });
+
+
+
+
+});
 router.post('/savesheet', isLoggedIn, function (req, res) {
 
     // Set our internal DB variable
@@ -35,6 +70,7 @@ router.post('/savesheet', isLoggedIn, function (req, res) {
     var collection = db.get('daysheetcollection');
 
     var daysheet = {
+        "hidden": req.body.hidden,
         "submit_daysheet": req.body.submit_daysheet,
         "store": req.body.store,
         "openername": req.body.openername,
@@ -109,7 +145,7 @@ router.post('/savesheet', isLoggedIn, function (req, res) {
                 req.flash('error', 'Can not save daysheet that was previously submitted');
                 res.location("daysheet");
                 res.redirect("daysheet?id=" + doc._id);
-                
+
             } else {
                 updateDB(collection, req, res, daysheet);
                 sendEmail(req, daysheet);
@@ -126,7 +162,7 @@ router.post('/savesheet', isLoggedIn, function (req, res) {
                 // If it worked, set the header so the address bar doesn't still say /adduser
 
                 sendEmail(req, daysheet);
-                daysheetDest(req, res, daysheet);
+                daysheetDest(req, res, doc);
             }
         });
     }
@@ -140,6 +176,8 @@ router.get('/api/daysheet/search', isLoggedIn, function (req, res) {
     var db = req.db;
     var startdate = req.param('startdate');
     var enddate = req.param('enddate');
+    var hidden = req.param('hidden');
+
 
     var store = req.param('store');
     console.log('store', req.params);
@@ -147,6 +185,13 @@ router.get('/api/daysheet/search', isLoggedIn, function (req, res) {
     if (store) {
         query["store"] = store;
     }
+    if (hidden) {
+        query["hidden"] = hidden;
+    } else {
+        //by default, only show not hidden daysheets
+       // query["hidden"] = 'false';
+    }
+
 
     if (startdate && enddate) {
 
@@ -175,7 +220,7 @@ router.get('/api/daysheet/search', isLoggedIn, function (req, res) {
 
 
 
-})
+});
 
 
 router.get('/api/daysheet/:id', isLoggedIn, function (req, res) {
@@ -189,7 +234,7 @@ router.get('/api/daysheet/:id', isLoggedIn, function (req, res) {
         res.json(doc);
     });
 
-})
+});
 
 
 function updateDB(collection, req, res, daysheet) {
@@ -212,9 +257,10 @@ function updateDB(collection, req, res, daysheet) {
 // route middleware to make sure a user is logged in
 function isLoggedIn(req, res, next) {
 
-    //if (true) {
-    //    return next();
-   // }
+    if (configAuth.development) {
+        console.log("isLoggedIn true dev");
+        return next();
+    }
     // if user is authenticated in the session, carry on
     if (req.isAuthenticated()) {
         return next();

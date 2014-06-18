@@ -186,6 +186,8 @@ block content
                     input.form-control(type="text",  id='income_deposit_redeemed',value="0" , name="income_deposit_redeemed") 
                 div.form-group.totalb 
                     label(for='income_total') Total (Total B)
-                    input.form-control(type="text",  disabled="disabled",value="0" , id='income_total', name="income_total")        
-       
-        
+                    input.form-control(type="text",  disabled="disabled",value="0" , id='income_total', name="income_total")    
+    form#togglehiddenform( name="toggle" method="post",action="/togglehidden")
+            input(type='hidden', id="_id", name="_id", value="")
+            div.form-group
+            button#hidden.btn-default(type="submit",name="hidden") Toggle Hidden
