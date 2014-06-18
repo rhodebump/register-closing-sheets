@@ -149,7 +149,7 @@ router.post('/savesheet', isLoggedIn, function (req, res) {
             } else {
                 updateDB(collection, req, res, daysheet);
                 sendEmail(req, daysheet);
-                daysheetDest(req, res, daysheet);
+                daysheetDest(req, res, doc);
             }
         });
     } else {

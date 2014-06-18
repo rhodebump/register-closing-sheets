@@ -150,15 +150,15 @@
          $('#togglehiddenform #_id').val(data._id);
 
          if (data.hidden == 'true') {
-             $('#hidden').text('Show Daysheet in search results');
+             $('#togglehiddenform #hidden').text('Show Daysheet in search results');
          } else {
-             $('#hidden').text('Hide Daysheet from search results');
+             $('#togglehiddenform #hidden').text('Hide Daysheet from search results');
          }
 
-         
-        $('#sheetform #hidden').val(data.hidden);
-         
-         
+
+         $('#sheetform #hidden').val(data.hidden);
+
+
      });
 
  }
