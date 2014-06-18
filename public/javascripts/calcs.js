@@ -155,6 +155,10 @@
              $('#hidden').text('Hide Daysheet from search results');
          }
 
+         
+        $('#sheetform #hidden').val(data.hidden);
+         
+         
      });
 
  }

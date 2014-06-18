@@ -1,6 +1,6 @@
 module.exports = {
 
-    'development': false,
+    'development': true,
     'googleAuth': {
         'clientID': process.env.GOOGLE_CLIENT_ID || 'clientID',
         'clientSecret': process.env.GOOGLE_CLIENT_SECRET || 'clientSecret',

@@ -186,10 +186,17 @@ router.get('/api/daysheet/search', isLoggedIn, function (req, res) {
         query["store"] = store;
     }
     if (hidden) {
-        query["hidden"] = hidden;
+        query["hidden"] = 'true';
     } else {
         //by default, only show not hidden daysheets
-       // query["hidden"] = 'false';
+        //since the hidden field was added after the fact, 
+        //instead of testing for false value, we are 
+        //using the ne test
+        //query["hidden"] = ' false';
+        query["hidden"] = {
+            "$ne": 'true'
+        };
+
     }
 
 
