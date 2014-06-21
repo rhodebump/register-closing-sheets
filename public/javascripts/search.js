@@ -14,8 +14,9 @@ function populateTable(data) {
         tableContent += '<tr>';
         tableContent += '<td><a href="daysheet?id=' + this._id + '" title="Show Details">Show Details</a></td>';
         tableContent += '<td>' + this.processdate + '</td>';
-        var tips = parseFloat(this.income_cash_tips) + parseFloat(this.income_cash_tips);
-        tableContent += '<td>' + tips + '</td>';
+        var tips = parseFloat(this.income_cash_tips) + parseFloat(this.credit_card_tips);
+        var tips2 = tips.toFixed(2);
+        tableContent += '<td>' + tips2 + '</td>';
         totaltips = totaltips + tips;
         tableContent += '<td>' + this.store + '</td>';
         tableContent += '</tr>';
@@ -23,8 +24,10 @@ function populateTable(data) {
 
     // Inject the whole content string into our existing HTML table
     $('#daysheetlist table tbody').html(tableContent);
-    $('#totaltips').html("Total tips:" + totaltips);
-    
+    var totaltips2 = totaltips.toFixed(2);
+
+    $('#totaltips').html("Total tips:" + totaltips2);
+
 
 };
 
@@ -38,11 +41,7 @@ function addEventHandlers() {
     //$('#startdate').datepicker();
     //  $('#enddate').datepicker();
     $("#searchbutton").click(function () {
-
         $.getJSON('/api/daysheet/search', $('#searchform').serialize(), populateTable);
-
-
-
         return false;
     });
 

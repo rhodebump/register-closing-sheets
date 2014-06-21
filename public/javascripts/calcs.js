@@ -53,9 +53,29 @@
 
 
 
+     $("#submit_daysheet").click(function (event) {
+         if (!isValidDaysheet()) {
+             event.preventDefault();
+         }
+
+     });
+
 
      populateDataIfId();
 
+
+ }
+
+ function isValidDaysheet() {
+     if ($('#store').val() == '') {
+         alert("Please choose store.");
+         return false;
+     } else if ($('#processdate').val() == '') {
+         alert("Please enter date.");
+         return false;
+     }
+
+     return true;
 
  }
 
@@ -226,6 +246,8 @@ disabled elements do not get submitted
 
 
  }
+
+
 
  function calculateIncomeTotals() {
 
