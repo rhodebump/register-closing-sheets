@@ -13,9 +13,9 @@
      total = total + parseFloat($('#open_50dollars').val());
 
      total = total + parseFloat($('#open_100dollars').val());
+     var total2 = total.toFixed(2);
 
-
-     $('#open_total').val(total);
+     $('#open_total').val(total2);
  }
 
 
@@ -136,9 +136,6 @@
          $('#processdate').val(data.processdate);
          $('#store').val(data.store);
 
-
-
-
          $('#totala').val(data.totala);
          $('#totalb').val(data.totalb);
          $('#difference').val(data.difference);
@@ -178,8 +175,9 @@
      var totalb = parseFloat($('#totalb').val());
      var total = totala - totalb;
 
+     var total2 = total.toFixed(2);
 
-     $('#difference').val(total);
+     $('#difference').val(total2);
  }
 
  /*
@@ -219,8 +217,10 @@ disabled elements do not get submitted
 
      $('#sub_total_sales').val(total);
      total = total + parseFloat($('#sales_tax').val());
-     $('#gross_sales').val(total);
-     $('#totala').val(total);
+     var total2 = total.toFixed(2);
+
+     $('#gross_sales').val(total2);
+     $('#totala').val(total2);
 
 
 
@@ -239,8 +239,10 @@ disabled elements do not get submitted
 
 
      total = total + parseFloat($('#income_gift_certificate_redeemed').val());
-     $('#income_total').val(total);
-     $('#totalb').val(total);
+     var total2 = total.toFixed(2);
+
+     $('#income_total').val(total2);
+     $('#totalb').val(total2);
 
  }
 
@@ -257,9 +259,15 @@ disabled elements do not get submitted
      total = total + parseFloat($('#close_50dollars').val());
      total = total + parseFloat($('#close_100dollars').val());
 
-     $('#close_total').val(total);
+     var total2 = total.toFixed(2);
+
+
+     $('#close_total').val(total2);
      //now let's set this to be closing total -100
-     $('#income_cash_store').val(total - 100.00);
+     var total_minus_100 = total - 100.00;
+
+     var total_minus_1002 = total_minus_100.toFixed(2);
+     $('#income_cash_store').val(total_minus_1002);
 
 
  }

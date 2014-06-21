@@ -149,15 +149,15 @@ block content
                 div.form-group  
                     label(for='income_cash_tips') Cash Tips
                     input.form-control(type="text",id='income_cash_tips',value="0", name="income_cash_tips")
-                div.form-group
+                div.form-group.noprint
                     label(for='save_daysheet') Save daysheet will save your changes. You can continue working on the daysheet until you hit submit
                     button#save_daysheet.btn-default(type="submit",name="save_daysheet") Save Daysheet                
-                div.form-group
+                div.form-group.noprint
                     label(for='submit_daysheet') Submit daysheet will save your changes.  You will not be able to make any changes after you do this
                     button#submit_daysheet.btn-default(type="submit",name="submit_daysheet") Submit Daysheet
             div.col-xs-4     
                 div.form-group.notes 
-                    label(for='notes') Notes (put comments here, notes, whatever)
+                    label.noprint(for='notes') Notes (put comments here, notes, whatever)
                     textarea.form-control(name="notes", rows="20", id="notes" )
             div.col-xs-4#income
                 h2|Step 4, Income

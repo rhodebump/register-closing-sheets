@@ -26,8 +26,7 @@
         padding:0px;
         borderx: 1px solid #000;
     }
-    input[type="submit"],
-    select {
+    input[type="submit"] {
         display: none;
     }
     button {
@@ -37,5 +36,11 @@
         background: white;
         font-size: 12pt;
         /* Change text colour to black (useful for light text on a dark background) */
+    }
+    .noprint {
+        display:none;   
+    }
+    #store {
+        width:100%; 
     }
 }
