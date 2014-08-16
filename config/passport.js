@@ -19,6 +19,7 @@ module.exports = function (passport) {
     //   and deserialized.
     passport.serializeUser(function (user, done) {
         console.log('serializeUser');
+        console.log(user);
         done(null, user);
     });
 
@@ -41,7 +42,17 @@ module.exports = function (passport) {
             process.nextTick(function () {
                 console.log('nextTick');
                 //profile.identifier = identifier;
-                return done(null, profile);
+                //var user = new User();
+               // user.id = profile.id;
+              //  user.name = profile.displayName;
+               // user.uid = token;
+                                
+                var user = {
+                    "id":  profile.id,
+                    "name":  profile.displayName,
+                    "uid":token
+                }
+                return done(null, user);
 
             });
 

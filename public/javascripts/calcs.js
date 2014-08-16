@@ -9,9 +9,7 @@
      total = total + parseFloat($('#open_5dollars').val());
      total = total + parseFloat($('#open_10dollars').val());
      total = total + parseFloat($('#open_20dollars').val());
-
      total = total + parseFloat($('#open_50dollars').val());
-
      total = total + parseFloat($('#open_100dollars').val());
      var total2 = total.toFixed(2);
 
@@ -24,7 +22,8 @@
 
 
      $("#processdate").datepicker({
-         dateFormat: "yy-mm-dd"
+         dateFormat: "yyyy-mm-dd",
+         defaultDate: new Date()
      });
      $("#opening input").change(function () {
          calculateAll();
@@ -70,10 +69,13 @@
      if ($('#store').val() == '') {
          alert("Please choose store.");
          return false;
-     } else if ($('#processdate').val() == '') {
-         alert("Please enter date.");
+     }
+     var currentDate = $('#processdate').datepicker("getDate");
+     if (currentDate == null) {
+         alert("Please enter date in format yyyy-mm-dd.");
          return false;
      }
+
 
      return true;
 

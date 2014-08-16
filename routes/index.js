@@ -4,7 +4,8 @@ var configAuth = require('../config/auth.js');
 
 router.get('/', function (req, res) {
     res.render('index', {
-        title: 'Color Me Mine'
+        title: 'Color Me Mine',
+        user: req.user
     });
 });
 
@@ -87,7 +88,6 @@ router.post('/savesheet', isLoggedIn, function (req, res) {
         "open_50dollars": req.body.open_50dollars,
         "open_100dollars": req.body.open_100dollars,
         "open_total": req.body.open_total,
-
         "close_1cent": req.body.close_1cent,
         "close_5cents": req.body.close_5cents,
         "close_10cents": req.body.close_10cents,
@@ -99,7 +99,6 @@ router.post('/savesheet', isLoggedIn, function (req, res) {
         "close_50dollars": req.body.close_50dollars,
         "close_100dollars": req.body.close_100dollars,
         "close_total": req.body.close_total,
-
         "income_cash_store": req.body.income_cash_store,
         "income_debits": req.body.income_debits,
         "income_checks": req.body.income_checks,
@@ -113,7 +112,6 @@ router.post('/savesheet', isLoggedIn, function (req, res) {
         "totalb": req.body.totalb,
         "difference": req.body.difference,
         "income_cash_tips": req.body.income_cash_tips,
-
         "bisque_sales": req.body.bisque_sales,
         "paint_time": req.body.paint_time,
         "child_party": req.body.child_party,
@@ -139,6 +137,7 @@ router.post('/savesheet', isLoggedIn, function (req, res) {
         }, function (err, doc) {
             console.log("found one");
             console.log("submit_daysheet=" + doc.submit_daysheet);
+            var admin = is_admin(
             if (doc.submit_daysheet != null) {
                 console.log("cannot save daysheet");
                 //res.send("Can not save daysheet that was previously submitted");
