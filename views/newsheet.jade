@@ -17,7 +17,7 @@ block content
             div.col-xs-4
                 div.form-group
                     label(for='openername') Opener's Name
-                    input.form-control(type="text", id="openername", name="openername")
+                    input.required.form-control(type="text", id="openername", name="openername")
             div.col-xs-4                    
                 div.form-group 
                     label(for='closername') Closer's Name
@@ -27,7 +27,7 @@ block content
                     label(for='processdate') Date
                     input.form-control.dpDate(type='text', name='processdate', id='processdate') 
                 div.form-group
-                    select.form-control#store(name='store')
+                    select.required.form-control#store(name='store')
                         option(value='') Select a Store
                         option(value='Squirrel Hill') Squirrel Hill
                         option(value='South Hills Village') South Hills Village

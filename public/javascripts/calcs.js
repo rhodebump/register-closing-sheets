@@ -79,11 +79,11 @@
          alert("Please choose store.");
          return false;
      }
-     var currentDate = $('#processdate').datepicker("getDate");
-     if (currentDate == null) {
-         alert("Please enter date in format yyyy-mm-dd.");
-         return false;
-     }
+    // var currentDate = $('#processdate').datepicker("getDate");
+   //  if (currentDate == null) {
+   //      alert("Please enter date in format yyyy-mm-dd.");
+   //      return false;
+   //  }
 
 
      return true;
