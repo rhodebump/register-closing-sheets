@@ -221,7 +221,15 @@ router.get('/api/daysheet/search', isLoggedIn, function (req, res) {
     console.log("query=", query);
 
     var collection = db.get('daysheetcollection');
-    collection.find(query, {}, function (e, docs) {
+    //sort by date asc
+    var options = {
+        "limit": 100,
+        "skip": 0,
+        "sort": "processdate"
+    }
+    
+    
+    collection.find(query,options, function (e, docs) {
         res.json(docs);
     });
 
