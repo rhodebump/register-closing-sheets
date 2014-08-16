@@ -140,7 +140,7 @@ router.post('/savesheet', isLoggedIn, function (req, res) {
                 console.log("it is editable");
                 updateDB(collection, req, res, daysheet);
                 sendEmail(req, daysheet);
-                daysheetDest(req, res, daysheet);
+                daysheetDest(req, res, existingDaysheet);
             } else {
              console.log("it is NOT editable");
                 console.log("cannot save daysheet");
