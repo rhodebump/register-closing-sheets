@@ -137,7 +137,7 @@ router.post('/savesheet', isLoggedIn, function (req, res) {
         }, function (err, doc) {
             console.log("found one");
             console.log("submit_daysheet=" + doc.submit_daysheet);
-            var admin = is_admin(
+            
             if (doc.submit_daysheet != null) {
                 console.log("cannot save daysheet");
                 //res.send("Can not save daysheet that was previously submitted");
