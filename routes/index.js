@@ -146,14 +146,14 @@ router.post('/savesheet', isLoggedIn, function (req, res) {
                 //res.send("Can not save daysheet that was previously submitted");
                 req.flash('error', 'Can not save daysheet that was previously submitted');
                 res.location("daysheet");
-                res.redirect("daysheet?id=" + doc._id);
+                res.redirect("daysheet?id=" + existingDaysheet._id);
 
 
             }
         });
     } else {
         console.log("doing insert");
-        collection.insert(daysheet, function (err, doc) {
+        collection.insert(daysheet, function (err, savedDaysheet) {
             if (err) {
                 // If it failed, return error
                 res.send("There was a problem adding the information to the database.");
@@ -161,7 +161,7 @@ router.post('/savesheet', isLoggedIn, function (req, res) {
                 // If it worked, set the header so the address bar doesn't still say /adduser
 
                 sendEmail(req, daysheet);
-                daysheetDest(req, res, doc);
+                daysheetDest(req, res, savedDaysheet);
             }
         });
     }

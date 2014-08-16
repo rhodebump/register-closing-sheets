@@ -20,9 +20,9 @@
  function addEventHandlers() {
 
 
-
+     //if you do yyyy, it will give you double four year dates, i.e. 20142014
      $("#processdate").datepicker({
-         dateFormat: "yyyy-mm-dd",
+         dateFormat: "yy-mm-dd",
          defaultDate: new Date()
      });
      $("#opening input").change(function () {
