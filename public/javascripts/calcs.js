@@ -21,10 +21,15 @@
 
 
      //if you do yyyy, it will give you double four year dates, i.e. 20142014
+
      $("#processdate").datepicker({
          dateFormat: "yy-mm-dd",
-         defaultDate: new Date()
      });
+     // defaultDate: new Date() did not work
+     var currentDate = new Date();
+     
+     $("#processdate").datepicker("setDate", currentDate);
+     
      $("#opening input").change(function () {
          calculateAll();
 

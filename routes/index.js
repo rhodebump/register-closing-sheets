@@ -137,11 +137,12 @@ router.post('/savesheet', isLoggedIn, function (req, res) {
             console.log("submit_daysheet=" + existingDaysheet.submit_daysheet);
 
             if (is_editable(req, res, existingDaysheet)) {
+                console.log("it is editable");
                 updateDB(collection, req, res, daysheet);
                 sendEmail(req, daysheet);
                 daysheetDest(req, res, daysheet);
             } else {
-
+             console.log("it is NOT editable");
                 console.log("cannot save daysheet");
                 //res.send("Can not save daysheet that was previously submitted");
                 req.flash('error', 'Can not save daysheet that was previously submitted');
